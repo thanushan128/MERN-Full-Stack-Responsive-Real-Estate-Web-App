@@ -1,9 +1,10 @@
 import express from 'express';
-import { bookVisit, createUser, getAllBookings } from '../controllers/userController.js';
-const router = express.Router()
+import { bookVisit, cancelBooking, createUser, getAllBookings } from '../controllers/userController.js';
+const router = express.Router();
 
-router.post("/register", createUser)
-router.post("/bookVisit/:id", bookVisit)
-router.post("/allBookings", getAllBookings)
+router.post("/register", createUser);
+router.post("/bookVisit/:id", bookVisit);
+router.post("/allBookings", getAllBookings);
+router.post("/cancelBooking/:id", cancelBooking);
 
-export {router as userRoute}
+export { router as userRoute };
