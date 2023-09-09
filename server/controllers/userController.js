@@ -88,3 +88,53 @@ export const cancelBooking = asyncHandler(async (req, res) => {
         throw new Error(err.message);
     }
 });
+
+// function to add a residency in favourite list of a user
+export const toFavourite = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    const { rid } = req.params;
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email }
+        });
+
+        if (user.favResidenciesID.includes(rid)) {
+            const updateUser = await prisma.user.update({
+                where: { email },
+                data: {
+                    favResidenciesID: {
+                        set: user.favResidenciesID.filter((id) => id !== rid)
+                    }
+                }
+            });
+            res.send({ message: "Removed from favorites", user: updateUser });
+        } else {
+            const updateUser = await prisma.user.update({
+                where: { email },
+                data: {
+                    favResidenciesID: {
+                        push: rid
+                    }
+                }
+            });
+            res.send({ message: "Updated favourites", user: updateUser });
+        }
+    } catch (err) {
+        throw new Error(err.message);
+    }
+});
+
+// function to get all favourites
+export const getAllFavorites = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    try {
+        const favResidency = await prisma.user.findUnique({
+            where: { email },
+            select: { favResidenciesID: true }
+        });
+        res.status(200).send(favResidency);
+    } catch (err) {
+        throw new Error(err.message);
+    }
+});
