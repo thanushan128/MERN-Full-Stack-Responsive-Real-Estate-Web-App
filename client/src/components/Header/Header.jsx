@@ -34,7 +34,7 @@ const Header = () => {
             <a href="#contact-us">Contact Us</a>
             <a href="#get-started">Get Started</a> */}
             <NavLink to="/properties">Properties</NavLink>
-            <a href="mailto:zainkeepscode@gmail.com">Contact</a>
+            <a href="mailto:shansan0018@gmail.com">Contact</a>
             <button className="button"> Login </button>
           </div>
         </OutsideClickHandler>
